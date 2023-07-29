@@ -5,34 +5,39 @@
  */
 // TIME TAKNE - 82ms
 var canConstruct = function (ransomNote, magazine) {
+
+  if (!ransomNote || !magazine || ransomNote.length > magazine.length) {
+    return false;
+  }
+
   const mHashmap = new Map();
   const rHashmap = new Map();
-  magazine   = magazine.split('');
+  let rIndex = ransomNote.length - 1;
   ransomNote = ransomNote.split('');
-  for (let index = 0; index < magazine.length; index++) {
-    let mElement = magazine[index];
-    let rElement = ransomNote[index];
-    let mCount   = mHashmap.get(mElement)
-    let rCount   = rHashmap.get(rElement)
 
+  for (const mElement of magazine) {
+    let mCount   = mHashmap.get(mElement);
     if (mCount) {
       mHashmap.set(mElement, mCount + 1);
     } else {
       mHashmap.set(mElement, 1);
     }
-
-    if (rCount) {
-      rHashmap.set(rElement, rCount + 1);
-    } else {
-      rHashmap.set(rElement, 1);
+  
+    if (rIndex >= 0) {
+      let rElement = ransomNote[rIndex];
+      let rCount   = rHashmap.get(rElement);
+      if (rCount) {
+        rHashmap.set(rElement, rCount + 1);
+      } else {
+        rHashmap.set(rElement, 1);
+      }
+      rIndex--;
     }
-
   }
 
   let output = false;
 
-  for (let index = 0; index < ransomNote.length; index++) {
-    let rElement = ransomNote[index];
+  for (const rElement of rHashmap.keys()) {
     let mCount   = mHashmap.get(rElement)
     let rCount   = rHashmap.get(rElement)
     
@@ -42,10 +47,8 @@ var canConstruct = function (ransomNote, magazine) {
       output = false;
       break
     }
-
   }
 
-  return output
-
+  return output;
 };
-console.log(canConstruct("cba", "bba"));
+console.log(canConstruct("ce", "e"));
