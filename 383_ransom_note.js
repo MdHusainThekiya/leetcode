@@ -3,9 +3,7 @@
  * @param {string} magazine
  * @return {boolean}
  */
-// TIME TAKNE - 82ms
 var canConstruct = function (ransomNote, magazine) {
-
   if (!ransomNote || !magazine || ransomNote.length > magazine.length) {
     return false;
   }
@@ -16,16 +14,16 @@ var canConstruct = function (ransomNote, magazine) {
   ransomNote = ransomNote.split('');
 
   for (const mElement of magazine) {
-    let mCount   = mHashmap.get(mElement);
+    let mCount = mHashmap.get(mElement);
     if (mCount) {
       mHashmap.set(mElement, mCount + 1);
     } else {
       mHashmap.set(mElement, 1);
     }
-  
+
     if (rIndex >= 0) {
       let rElement = ransomNote[rIndex];
-      let rCount   = rHashmap.get(rElement);
+      let rCount = rHashmap.get(rElement);
       if (rCount) {
         rHashmap.set(rElement, rCount + 1);
       } else {
@@ -38,10 +36,7 @@ var canConstruct = function (ransomNote, magazine) {
   let output = false;
 
   for (const rElement of rHashmap.keys()) {
-    let mCount   = mHashmap.get(rElement)
-    let rCount   = rHashmap.get(rElement)
-    
-    if (mCount >= rCount) {
+    if (mHashmap.get(rElement) >= rHashmap.get(rElement)) {
       output = true;
     } else {
       output = false;
