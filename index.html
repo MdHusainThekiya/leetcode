@@ -3,57 +3,8 @@
 
 <head>
   <title>Display JavaScript Code</title>
-
-  <!-- Include Prism.js CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.css" rel="stylesheet" />
-
-  
-  <style>
-    body {
-      background-color: #282c34;
-    }
-
-    pre {
-      background-color: #1e1e1e;
-      padding: 10px;
-      border: 1px solid #333;
-      white-space: pre;
-      font-family: 'Fira Code', monospace;
-      font-size: 14px;
-      line-height: 1.5;
-      color: #d4d4d4;
-      overflow-x: auto;
-      border-radius: 5px;
-      margin: 10px 0;
-    }
-
-    pre code {
-      display: block;
-      padding: 0;
-      margin: 0;
-      overflow: auto;
-      background-color: transparent;
-      border: 0;
-    }
-
-    #file-list a {
-      display: block;
-      margin-bottom: 5px;
-      color: #61afef;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    #file-list a:hover {
-      text-decoration: underline;
-    }
-
-    /* Improved visibility for file headers */
-    #file-list a {
-      color: #a0cfff;
-    }
-  </style>
-
+  <!-- Include Highlight.js CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
 </head>
 
 <body>
@@ -61,24 +12,49 @@
     <!-- File names will be inserted here -->
   </div>
   <script>
-    const fileNames = [
+    const fileNames = ['102_binary_tree_level_order_traversal.js',
+      '104_maximum_depth_of_binary_tree.js',
+      '110_balanced_binary_tree.js',
+      '121_best_time_to_buy_and_sell_stock.js',
+      '125_valid_palindrome.js',
+      '141_linked_list_cycle.js',
+      '150_evaluate_reverse_polish_notation.js',
+      '15_3Sum.js',
+      '167_two_sum_II_-_input_array_is_sorted.js',
+      '169_majority_element.js',
       '1_two_sum.js',
+      '206_reverse_linked_list.js',
+      '20_valid_parentheses.js',
+      '217_contains_duplicate.js',
+      '21_merge_two_sorted_lists.js',
+      '226_invert_binary_tree.js',
+      '232_implement_queue_using_stacks.js',
+      '235_lowest_common_ancestor_of_a_binary_search_tree.js',
+      '242_valid_anagram.js',
+      '278_first_bad_version.js',
+      '383_ransom_note.js',
       '3_longest_substring_without_repeating_characters.js',
-      // Add more file names here
-    ];
+      '409_longest_palindrome.js',
+      '53_maximum_subarray.js',
+      '543_diameter_of_binary_tree.js',
+      '57_insert_interval.js',
+      '704_binary_search.js',
+      '70_climbing_stairs.js',
+      '86_partition_list.js',
+      '876_middle_of_the_linked_list.js',
+      '973_k_closest_points_to_origin.js']
 
     async function loadAndDisplayCode(fileName) {
       const response = await fetch('./' + fileName);
       const codeContent = await response.text();
-      const url = await response.url;
-      return {codeContent, url};
+      return { codeContent, url: response.url };
     }
 
     async function displayFiles() {
       const fileListContainer = document.querySelector('#file-list');
 
       for (const fileName of fileNames) {
-        const {codeContent, url} = await loadAndDisplayCode(fileName);
+        const { codeContent, url } = await loadAndDisplayCode(fileName);
 
         const fileHeader = document.createElement('a');
         fileHeader.textContent = fileName;
@@ -88,17 +64,19 @@
 
         const pre = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = "language-javascript"; // Prism.js language class
+        codeElement.className = "javascript"; // Highlight.js language class
         codeElement.textContent = codeContent;
         pre.appendChild(codeElement);
         fileListContainer.appendChild(pre);
+
+        // Apply syntax highlighting after appending code content
+        hljs.highlightBlock(codeElement);
       }
     }
 
     displayFiles();
   </script>
-    <!-- Include Prism.js JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
 </body>
 
 </html>
