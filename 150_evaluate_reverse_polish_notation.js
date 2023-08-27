@@ -4,23 +4,25 @@
  */
 var evalRPN = function (tokens) {
 
-  let opt = {
-    "+": (a, b) => { return parseInt(a) + parseInt(b) },
-    "-": (a, b) => { return parseInt(a) - parseInt(b) },
-    "*": (a, b) => { return parseInt(a) * parseInt(b) },
-    "/": (a, b) => { return parseInt(a) / parseInt(b) },
+  const stack = [];
+  const operation = {
+    "+": (b, a) => { return parseInt(a) + parseInt(b) },
+    "-": (b, a) => { return parseInt(a) - parseInt(b) },
+    "*": (b, a) => { return parseInt(a) * parseInt(b) },
+    "/": (b, a) => { return parseInt(a) / parseInt(b) },
   }
 
   for (let index = 0; index < tokens.length; index++) {
-    let func = opt[tokens[index]]
+    let func = operation[tokens[index]]
     if (typeof func === 'function') {
-      let val = func(tokens[index - 2], tokens[index - 1])
-      tokens.splice(index - 2, 3, val);
-      index = index - 2;
+      let val = func(stack.pop(), stack.pop());
+      stack.push(val);
+    } else {
+      stack.push(tokens[index])
     }
   }
 
-  return parseInt(tokens[0]);
+  return parseInt(stack[0]);
 
 };
 
