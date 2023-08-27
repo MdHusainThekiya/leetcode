@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Display JavaScript Code from GitHub</title>
+    <title>Display JavaScript Code</title>
     <style>
         pre {
             background-color: #f4f4f4;
@@ -13,47 +13,25 @@
     </style>
 </head>
 <body>
-    <div id="code-container"></div>
+    <a id="url" href="" target="_blank"></a>
+    <pre>
+        <code id="code-content">
+            <!-- Code will be inserted here -->
+        </code>
+    </pre>
     <script>
-        const repositoryUrl = 'https://github.com/MdHusainThekiya/leetcode';
-        
-        async function fetchFilesFromRoot() {
-            try {
-                const response = await fetch(repositoryUrl);
-                const contents = await response.json();
-
-                for (const item of contents) {
-                    if (item.type === 'file' && item.name.endsWith('.js')) {
-                        await displayFile(item.download_url, item.name);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching files:', error);
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '1_two_sum.js', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              console.log('[index.html]::xhr::', typeof(xhr), xhr);
+                const codeContent = xhr.response;
+                document.querySelector('#code-content').textContent = codeContent;
+                document.querySelector('#url').textContent = '1_two_sum.js'
+                document.querySelector('#url').href = xhr.responseURL
             }
-        }
-
-        async function displayFile(downloadUrl, fileName) {
-            try {
-                const response = await fetch(downloadUrl);
-                const content = await response.text();
-
-                const codeContainer = document.querySelector('#code-container');
-                const preElement = document.createElement('pre');
-                const codeElement = document.createElement('code');
-                codeElement.textContent = content;
-                preElement.appendChild(codeElement);
-
-                const fileNameElement = document.createElement('p');
-                fileNameElement.textContent = fileName;
-
-                codeContainer.appendChild(fileNameElement);
-                codeContainer.appendChild(preElement);
-            } catch (error) {
-                console.error('Error fetching file content:', error);
-            }
-        }
-
-        fetchFilesFromRoot();
+        };
+        xhr.send();
     </script>
 </body>
 </html>
