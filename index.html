@@ -1,59 +1,103 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Display JavaScript Code from GitHub</title>
-    <style>
-        pre {
-            background-color: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ccc;
-            white-space: pre;
-            font-family: monospace;
-        }
-    </style>
+  <title>Display JavaScript Code</title>
+  <style>
+    body {
+      background-color: #282c34; /* New background color */
+    }
+  
+    pre {
+      background-color: #1e1e1e;
+      padding: 10px;
+      border: 1px solid #333;
+      white-space: pre;
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #d4d4d4;
+      overflow-x: auto;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+  
+    pre code {
+      display: block;
+      padding: 0;
+      margin: 0;
+      overflow: auto;
+      background-color: transparent;
+      border: 0;
+    }
+  
+    #file-list a {
+      display: block;
+      margin-bottom: 5px;
+      color: #61afef;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  
+    #file-list a:hover {
+      text-decoration: underline;
+    }
+  
+    /* Improved visibility for file headers */
+    #file-list a {
+      color: #a0cfff;
+    }
+  </style>
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha384-0es5B3+vIN5GHMNRdFQDci6tMJDFs8DGMwxFnQ+KjwI3z18c8k/xCqF0MLjOXhy8" crossorigin="anonymous">
 </head>
+
 <body>
-    <div id="code-container"></div>
-    <script>
-        const repositoryUrl = 'https://github.com/MdHusainThekiya/leetcode';
-        
-        async function fetchFilesFromRoot() {
-            try {
-                const response = await fetch(repositoryUrl);
-                const contents = await response.json();
+  <div id="file-list">
+    <!-- File names will be inserted here -->
+  </div>
+  <script>
+    const fileNames = [
+      '1_two_sum.js',
+      '3_longest_substring_without_repeating_characters.js',
+      // Add more file names here
+    ];
 
-                for (const item of contents) {
-                    if (item.type === 'file' && item.name.endsWith('.js')) {
-                        await displayFile(item.download_url, item.name);
-                    }
-                }
-            } catch (error) {
-                console.error('Error fetching files:', error);
-            }
-        }
+    async function loadAndDisplayCode(fileName) {
+      const response = await fetch('./' + fileName);
+      const codeContent = await response.text();
+      const url = await response.url;
+      return {codeContent, url};
+    }
 
-        async function displayFile(downloadUrl, fileName) {
-            try {
-                const response = await fetch(downloadUrl);
-                const content = await response.text();
+    async function displayFiles() {
+      const fileListContainer = document.querySelector('#file-list');
 
-                const codeContainer = document.querySelector('#code-container');
-                const preElement = document.createElement('pre');
-                const codeElement = document.createElement('code');
-                codeElement.textContent = content;
-                preElement.appendChild(codeElement);
+      for (const fileName of fileNames) {
+        const {codeContent, url} = await loadAndDisplayCode(fileName);
 
-                const fileNameElement = document.createElement('p');
-                fileNameElement.textContent = fileName;
+        const fileHeader = document.createElement('a');
+        fileHeader.textContent = fileName;
+        fileHeader.href = url;
+        fileHeader.target = '_blank';
+        fileListContainer.appendChild(fileHeader);
 
-                codeContainer.appendChild(fileNameElement);
-                codeContainer.appendChild(preElement);
-            } catch (error) {
-                console.error('Error fetching file content:', error);
-            }
-        }
+        const pre = document.createElement('pre');
+        const codeElement = document.createElement('code');
+        codeElement.className = "language-javascript";
+        codeElement.textContent = codeContent;
+        pre.appendChild(codeElement);
+        fileListContainer.appendChild(pre);
+      }
+    }
 
-        fetchFilesFromRoot();
-    </script>
+    displayFiles();
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js" crossorigin="anonymous"></script>
+    
 </body>
+
 </html>
