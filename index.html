@@ -3,11 +3,16 @@
 
 <head>
   <title>Display JavaScript Code</title>
+
+  <!-- Include Prism.js CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.css" rel="stylesheet" />
+
+  
   <style>
     body {
-      background-color: #282c34; /* New background color */
+      background-color: #282c34;
     }
-  
+
     pre {
       background-color: #1e1e1e;
       padding: 10px;
@@ -21,7 +26,7 @@
       border-radius: 5px;
       margin: 10px 0;
     }
-  
+
     pre code {
       display: block;
       padding: 0;
@@ -30,7 +35,7 @@
       background-color: transparent;
       border: 0;
     }
-  
+
     #file-list a {
       display: block;
       margin-bottom: 5px;
@@ -38,19 +43,17 @@
       text-decoration: none;
       font-weight: bold;
     }
-  
+
     #file-list a:hover {
       text-decoration: underline;
     }
-  
+
     /* Improved visibility for file headers */
     #file-list a {
       color: #a0cfff;
     }
   </style>
-  
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css" integrity="sha384-0es5B3+vIN5GHMNRdFQDci6tMJDFs8DGMwxFnQ+KjwI3z18c8k/xCqF0MLjOXhy8" crossorigin="anonymous">
+
 </head>
 
 <body>
@@ -85,7 +88,7 @@
 
         const pre = document.createElement('pre');
         const codeElement = document.createElement('code');
-        codeElement.className = "language-javascript";
+        codeElement.className = "language-javascript"; // Prism.js language class
         codeElement.textContent = codeContent;
         pre.appendChild(codeElement);
         fileListContainer.appendChild(pre);
@@ -94,10 +97,8 @@
 
     displayFiles();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/plugins/autoloader/prism-autoloader.min.js" crossorigin="anonymous"></script>
-    
+    <!-- Include Prism.js JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.js"></script>
 </body>
 
 </html>
