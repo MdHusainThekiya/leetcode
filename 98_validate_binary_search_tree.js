@@ -10,38 +10,12 @@
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isValidBST = function(root) {
-    
-  if (root) {
-      let left = false;
-      let right = false;
-      if (root.left) {
-          if (root.left.val < root.val){
-              left = isValidBST(root.left);
-          } else {
-              left = false;
-          }
-      } else {
-          left = true;
-      }
-      console.log("left", left)
-      if (root.right) {
-          if (root.right.val > root.val){
-              right = isValidBST(root.right);
-          } else {
-              right = false;
-          }
-      } else {
-          right = true;
-      }
-      console.log("right", right)
-      if (left && right) {
-          return true;
-      } else {
-          return false;
-      }
-  } else {
-      return true;
-  }
-
+var isValidBST = function(root, minimum, maximum) {
+  // Base case: root is null...
+  if(root == null) return true;
+  // If the value of root is less or equal to minimum...
+  // Or If the value of root is greater or equal to maximum...
+  if(root.val <= minimum || root.val >= maximum) return false;
+  // Recursively call the function for the left and right subtree...
+  return isValidBST(root.left, minimum, root.val) && isValidBST(root.right, root.val, maximum);
 };
