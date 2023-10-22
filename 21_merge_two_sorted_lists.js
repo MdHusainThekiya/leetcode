@@ -67,56 +67,7 @@ var mergeTwoLists = function (list1, list2) {
 
 };
 
-function LinkedList() {
-
-  this.node = new ListNode();
-  this.size = 0;
-
-  this.add = (val) => {
-    if (this.node.val === null) {
-      this.node.val = val;
-      this.size++;
-    } else {
-      let dummy = new ListNode();
-      dummy.val = val;
-      dummy.next = this.node;
-      this.node = dummy;
-      this.size++;
-    }
-  }
-
-  this.addAtLast = (val) => {
-
-    let curr = this.node;
-
-    if (curr.val == null) {
-      curr.val = val;
-      return;
-    }
-
-    while(curr.next) {
-      curr = curr.next;
-    }
-
-    let dummy = new ListNode();
-    dummy.val = val
-
-    curr.next = dummy
-
-    this.size++;
-  }
-
-  this.getAll = () => {
-
-    let curr = this.node;
-    while(curr.next) {
-      console.log(curr.val);
-      curr = curr.next;
-    }
-    console.log(curr.val);
-  }
-
-}
+/** USING COMMON LINKEDLIST */
 
 let list1 = new LinkedList();
 let list2 = new LinkedList();
