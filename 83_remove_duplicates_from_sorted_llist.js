@@ -28,13 +28,5 @@ var deleteDuplicates = function (head) {
   return head;
 };
 
-
-const {LinkedList} = require('./index.js');
-
-let linkedList = new LinkedList();
-let array = [1,1,2,3,3];
-for (let index = 0; index < array.length; index++) {
-  linkedList.add(array[index]);
-}
-
-console.log(deleteDuplicates(linkedList));
+const {LinkedList} = require('./index');
+console.log(deleteDuplicates(new LinkedList().bulkAdd([1,1,2,3,3])));

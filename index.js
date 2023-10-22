@@ -63,13 +63,14 @@ index.LinkedList = function () {
       console.log(curr.val);
       curr = curr.next;
     }
-    console.log(curr.val);
+    return this.node
   }
 
   this.bulkAdd = (valArray = []) => {
     for (let index = 0; index < valArray.length; index++) {
       this.add(valArray[index])
     }
+    return this.node
   }
 
 }
