@@ -2,7 +2,11 @@
  * @param {number[]} height
  * @return {number}
  */
-var maxArea = function(height) {
+
+/** 
+ * BRUITFORCE SOLUTION
+ * 
+  var maxArea = function(height) {
     
   let monoStack = [];
   let maxHeightYet = 0;
@@ -39,6 +43,40 @@ var maxArea = function(height) {
         maxArea = thisArea;
       }
     }
+  }
+
+  return maxArea;
+};
+
+*/
+
+/** OPTIMIZED TWO POINTER SOLUTION */
+/**
+ * @param {number[]} height
+ * @return {number}
+ */
+var maxArea = function(height) {
+  let maxArea = 0;
+  let leftPointer = 0;
+  let rightPointer = height.length - 1
+
+  while(leftPointer <= rightPointer) {
+
+    let leftVal = height[leftPointer];
+    let rightVal = height[rightPointer];
+
+    /** calculate */
+    let thisArea = Math.min( leftVal, rightVal ) * (rightPointer - leftPointer);
+    if (thisArea > maxArea) {
+      maxArea = thisArea;
+    }
+
+    if (leftVal > rightVal) {
+      rightPointer--;
+    } else {
+      leftPointer++;
+    }
+
   }
 
   return maxArea;
